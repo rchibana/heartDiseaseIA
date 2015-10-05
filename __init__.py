@@ -2,6 +2,15 @@ __author__ = 'rchibana'
 
 from utils import get_data, encode_target
 from tree import TreeClassifier
+from bayes import GaussianNB
+from neural_network import NeuralNetworkClassifier
+
+# Return the instance to local test
+def instance_of_classifier():
+
+    # return TreeClassifier(min_samples_split=20, random_state=99)
+    # return GaussianNB(min_samples_split=20, random_state=99)
+    return NeuralNetworkClassifier(min_samples_split=20, random_state=99)
 
 if __name__ == '__main__':
 
@@ -15,11 +24,11 @@ if __name__ == '__main__':
     X = data[FEATURES]
 
     try:
-        tree_classifier = TreeClassifier(min_samples_split=20, random_state=99)
-        tree_classifier.do_train(X, y)
-        prediction = tree_classifier.do_classification(X, y)
+        new_classifier = instance_of_classifier()
+        new_classifier.do_train(X, y)
+        prediction = new_classifier.do_classification(X, y)
 
-        score = tree_classifier.do_cross_validation(tree_classifier.classifier, X, y)
+        score = new_classifier.do_cross_validation(new_classifier.classifier, X, y)
     except Exception, e:
         print e
 
